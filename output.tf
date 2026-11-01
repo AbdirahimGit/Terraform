@@ -1,34 +1,29 @@
-output "vpc_id" {
-  value       = data.aws_vpc.default.id
-  description = "The ID of the defualt VPC."
-}
-
-output "subnet_id" {
-  value       = data.aws_subnets.default_subnets.ids[0]
-  description = "The ID of the first default subnet."
-}
-
-output "ami_id" {
-  description = "Latest Amazon Linux 2023 AMI ID"
-  value       = data.aws_ami.amazon_linux.id
+output "site_url" {
+  description = "HTTP URL for the WordPress site."
+  value       = "http://${module.ec2.ec2_public_ip}"
 }
 
 output "ec2_instance_id" {
-  description = "ID of the EC2 instance"
-  value       = aws_instance.EC2.id
+  description = "ID of the WordPress EC2 instance."
+  value       = module.ec2.ec2_instance_id
 }
 
 output "ec2_public_ip" {
-  description = "Public IP address of the instance"
-  value       = aws_instance.EC2.public_ip
+  description = "Public IPv4 address of the WordPress EC2 instance."
+  value       = module.ec2.ec2_public_ip
 }
 
 output "public_dns" {
-  description = "Public DNS name of the instance"
-  value       = aws_instance.EC2.public_dns
+  description = "Public DNS name of the WordPress EC2 instance."
+  value       = module.ec2.public_dns
 }
 
-output "site_url" {
-  description = "URL of the WordPress site"
-  value       = "http://${aws_instance.EC2.public_ip}"
+output "vpc_id" {
+  description = "VPC used by the deployment."
+  value       = module.network.vpc_id
+}
+
+output "subnet_id" {
+  description = "Subnet used by the EC2 instance."
+  value       = module.network.subnet_id
 }
