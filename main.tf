@@ -95,6 +95,20 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
+#EC2 Instance
+
+resource "aws_instance" "EC2" {
+  ami                         = data.aws_ami.amazon_linux.id
+  instance_type               = "t3.micro"
+  subnet_id                   = data.aws_subnets.default_subnets.ids[0]
+  vpc_security_group_ids      = [aws_security_group.wordpress.id]
+  associate_public_ip_address = true
+
+  tags = {
+    Name = "EC2 Instance"
+  }
+}
+
 
 
 
